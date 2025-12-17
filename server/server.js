@@ -30,7 +30,7 @@ app.use(express.json());
 
 // Test route
 app.get('/', (req, res) => {
-  res.json({ message: 'Budget Tracker API is running! 🚀' });
+  res.json({ message: 'Budget Tracker API is running! ' });
 });
 
 // TEST ROUTE - Create a sample user
