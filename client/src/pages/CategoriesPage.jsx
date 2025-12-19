@@ -183,96 +183,113 @@ const CategoriesPage = () => {
         </div>
       </GlassCard>
 
-            {/* Add/Edit Modal */}
+      {/* Add/Edit Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={editingCategory ? 'Edit Category' : 'Add Category'}
       >
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Category Name */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Category Name
-            </label>
+            <label className="block text-white font-medium mb-2">Category Name</label>
             <input
               type="text"
-              required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 text-white border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g. Food, Rent, Salary"
+              required
+              className="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g., Groceries"
             />
           </div>
 
-          {/* Category Type */}
+          {/* Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Category Type
-            </label>
+            <label className="block text-white font-medium mb-2">Type</label>
             <select
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-10 text-white border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="expense">Expense</option>
-              <option value="income">Income</option>
+              <option value="expense" className="bg-gray-800">Expense</option>
+              <option value="income" className="bg-gray-800">Income</option>
             </select>
           </div>
 
-          {/* Icon Picker */}
+          {/* Icon */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Icon
-            </label>
-            <div className="flex flex-wrap gap-2">
+            <label className="block text-white font-medium mb-2">Icon</label>
+            <div className="grid grid-cols-8 gap-2 mb-3">
               {commonEmojis.map((emoji) => (
                 <button
-                  type="button"
                   key={emoji}
+                  type="button"
                   onClick={() => setFormData({ ...formData, icon: emoji })}
                   className={`text-2xl p-2 rounded-lg transition-all ${
                     formData.icon === emoji
-                      ? 'bg-blue-500 scale-110'
-                      : 'bg-white bg-opacity-10 hover:bg-opacity-20'
+                      ? 'bg-blue-500 bg-opacity-30 border-2 border-blue-500'
+                      : 'bg-white bg-opacity-5 hover:bg-opacity-10'
                   }`}
                 >
                   {emoji}
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* Color Picker */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Color
-            </label>
             <input
-              type="color"
-              value={formData.color}
-              onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-              className="w-16 h-10 rounded cursor-pointer border-none"
+              type="text"
+              value={formData.icon}
+              onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+              maxLength={2}
+              className="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Or type custom emoji"
             />
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-end gap-3 pt-4">
-            <button
-              type="button"
-              onClick={handleCloseModal}
-              className="px-5 py-2 rounded-lg bg-gray-500 bg-opacity-20 text-gray-300 hover:bg-opacity-30"
-            >
-              Cancel
-            </button>
+          {/* Color */}
+          <div>
+            <label className="block text-white font-medium mb-2">Color</label>
+            <div className="flex items-center gap-4">
+              <input
+                type="color"
+                value={formData.color}
+                onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                className="w-20 h-12 rounded-lg cursor-pointer"
+              />
+              <input
+                type="text"
+                value={formData.color}
+                onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                className="flex-1 px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="#3B82F6"
+              />
+            </div>
+          </div>
 
-            <Button3D type="submit">
-              {editingCategory ? 'Update Category' : 'Create Category'}
+          {/* Preview */}
+          <div>
+            <label className="block text-white font-medium mb-2">Preview</label>
+            <div
+              className="p-6 rounded-xl text-center"
+              style={{ backgroundColor: `${formData.color}20`, border: `2px solid ${formData.color}` }}
+            >
+              <div className="text-5xl mb-2">{formData.icon}</div>
+              <p className="text-white font-medium">{formData.name || 'Category Name'}</p>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-3 pt-4">
+            <Button3D type="submit" variant="success" fullWidth>
+              {editingCategory ? 'Update' : 'Create'}
+            </Button3D>
+            <Button3D type="button" variant="secondary" fullWidth onClick={handleCloseModal}>
+              Cancel
             </Button3D>
           </div>
         </form>
       </Modal>
+    </div>
+  );
+};
 
-  </div>);
-}; 
 export default CategoriesPage;
