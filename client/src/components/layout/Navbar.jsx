@@ -1,3 +1,7 @@
+import { useState, useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
+import { Palette } from 'lucide-react';
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, User, Menu } from 'lucide-react';
@@ -16,7 +20,12 @@ const Navbar = ({ toggleSidebar }) => {
     navigate('/login');
   };
 //   const { currentTheme, themes, changeTheme } = useContext(ThemeContext);
+
 // const [showThemeMenu, setShowThemeMenu] = useState(false);
+
+
+const { currentTheme, themes, changeTheme } = useContext(ThemeContext);
+const [showThemeMenu, setShowThemeMenu] = useState(false);
 
   return (
     <nav className="glass sticky top-0 z-30 border-b border-white border-opacity-20">
@@ -73,21 +82,58 @@ const Navbar = ({ toggleSidebar }) => {
   )}
 </div> */}
 
-          {/* Right: User Info + Logout */}
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-white">
-              <User size={20} />
-              <span className="font-medium">{user?.name}</span>
-            </div>
-            <Button3D
-              variant="danger"
-              size="sm"
-              icon={LogOut}
-              onClick={handleLogout}
+{/* Right: Theme + User + Logout */}
+<div className="flex items-center gap-4">
+  {/* Theme Selector */}
+  <div className="relative">
+    <button
+      onClick={() => setShowThemeMenu(!showThemeMenu)}
+      className="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded-lg transition-colors"
+      title="Change Theme"
+    >
+      <Palette size={20} />
+    </button>
+
+    {showThemeMenu && (
+      <div className="absolute right-0 mt-2 w-56 glass rounded-lg shadow-xl p-3 z-50">
+        <p className="text-white font-semibold mb-2 text-sm">Choose Theme</p>
+        <div className="space-y-2 max-h-96 overflow-y-auto">
+          {Object.keys(themes).map((themeKey) => (
+            <button
+              key={themeKey}
+              onClick={() => {
+                changeTheme(themeKey);
+                setShowThemeMenu(false);
+              }}
+              className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-3 ${
+                currentTheme === themeKey
+                  ? 'bg-white bg-opacity-20 text-white font-semibold'
+                  : 'text-gray-300 hover:bg-white hover:bg-opacity-10'
+              }`}
             >
-              <span className="hidden sm:inline">Logout</span>
-            </Button3D>
-          </div>
+              <span
+                className="w-6 h-6 rounded-full border-2 border-white"
+                style={{ background: themes[themeKey].gradient }}
+              />
+              <span className="text-sm">{themes[themeKey].name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+
+  {/* User Info */}
+  <div className="hidden sm:flex items-center gap-2 text-white">
+    <User size={20} />
+    <span className="font-medium">{user?.name}</span>
+  </div>
+
+  {/* Logout */}
+  <Button3D variant="danger" size="sm" icon={LogOut} onClick={handleLogout}>
+    <span className="hidden sm:inline">Logout</span>
+  </Button3D>
+</div>
           
         </div>
       </div>

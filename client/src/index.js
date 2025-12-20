@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import './styles/animations.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -9,7 +10,6 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
 
 
 // client/
@@ -134,3 +134,12 @@ root.render(
 // ├── .env ✅ (Environment variables)
 // ├── server.js ✅ (Main server file)
 // └── package.json ✅
+
+
+
+
+
+// git status
+// git add .
+// git commit -m "Daily update"
+// git push
