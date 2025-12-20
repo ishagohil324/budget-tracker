@@ -45,13 +45,13 @@ const ProfilePage = () => {
         <GlassCard>
           <div className="flex flex-col md:flex-row items-center gap-6 mb-8">
             {/* Avatar */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-6xl">
-              {user?.avatar ? (
-                <img src={user.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
-              ) : (
-                <span>👤</span>
-              )}
-            </div>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-6xl font-bold text-white">
+  {user?.avatar ? (
+    <img src={user.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+  ) : (
+    <span>{user?.name?.charAt(0).toUpperCase() || '👤'}</span>
+  )}
+</div>
 
             {/* User Info */}
             <div className="flex-1 text-center md:text-left">

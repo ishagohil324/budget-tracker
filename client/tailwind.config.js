@@ -14,9 +14,6 @@ module.exports = {
         dark: '#1F2937',
         light: '#F9FAFB',
       },
-      backdropBlur: {
-        xs: '2px',
-      },
     },
   },
   plugins: [],

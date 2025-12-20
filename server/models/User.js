@@ -19,9 +19,9 @@ const UserSchema = new mongoose.Schema({
     minlength: 6
   },
   avatar: {
-    type: String,
-    default: 'https://via.placeholder.com/150'
-  },
+  type: String,
+  default: 'https://ui-avatars.com/api/?name=User&background=3B82F6&color=fff&size=150'
+},
   createdAt: {
     type: Date,
     default: Date.now

@@ -37,7 +37,7 @@ const Home = () => {
         className="text-center mb-12"
       >
         <h1 className="text-6xl md:text-8xl font-bold text-white mb-4">
-          💰 Budget Tracker 3D
+          💰 Budget Tracker 
         </h1>
         <p className="text-xl md:text-2xl text-gray-200 mb-8">
           Track your finances with stunning 3D visualizations
@@ -83,7 +83,7 @@ const Home = () => {
         transition={{ delay: 0.5 }}
         className="mt-16 text-center text-gray-300"
       >
-        <p>© 2024 Budget Tracker 3D. Built with ❤️ by Students</p>
+        <p>© 2025 Budget Tracker . Built with ❤️ by Students</p>
       </motion.div>
     </div>
   );
