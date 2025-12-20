@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, User, Menu } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import Button3D from '../common/Button3D';
+// import { useContext } from 'react';
+// import { ThemeContext } from '../../context/ThemeContext';
+// import { Palette } from 'lucide-react';
 
 const Navbar = ({ toggleSidebar }) => {
   const { user, logout } = useAuth();
@@ -12,6 +15,8 @@ const Navbar = ({ toggleSidebar }) => {
     logout();
     navigate('/login');
   };
+//   const { currentTheme, themes, changeTheme } = useContext(ThemeContext);
+// const [showThemeMenu, setShowThemeMenu] = useState(false);
 
   return (
     <nav className="glass sticky top-0 z-30 border-b border-white border-opacity-20">
@@ -33,6 +38,41 @@ const Navbar = ({ toggleSidebar }) => {
             </Link>
           </div>
 
+          {/* Theme Selector */}
+{/* <div className="relative">
+  <button
+    onClick={() => setShowThemeMenu(!showThemeMenu)}
+    className="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded-lg transition-colors"
+  >
+    <Palette size={20} />
+  </button>
+  
+  {showThemeMenu && (
+    <div className="absolute right-0 mt-2 w-48 glass rounded-lg shadow-xl p-2 z-50">
+      {Object.keys(themes).map((theme) => (
+        <button
+          key={theme}
+          onClick={() => {
+            changeTheme(theme);
+            setShowThemeMenu(false);
+          }}
+          className={`w-full text-left px-4 py-2 rounded-lg mb-1 capitalize transition-colors ${
+            currentTheme === theme
+              ? 'bg-white bg-opacity-20 text-white font-semibold'
+              : 'text-gray-300 hover:bg-white hover:bg-opacity-10'
+          }`}
+        >
+          <span
+            className="inline-block w-4 h-4 rounded-full mr-2"
+            style={{ background: themes[theme] }}
+          />
+          {theme}
+        </button>
+      ))}
+    </div>
+  )}
+</div> */}
+
           {/* Right: User Info + Logout */}
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-2 text-white">
@@ -48,6 +88,7 @@ const Navbar = ({ toggleSidebar }) => {
               <span className="hidden sm:inline">Logout</span>
             </Button3D>
           </div>
+          
         </div>
       </div>
     </nav>
