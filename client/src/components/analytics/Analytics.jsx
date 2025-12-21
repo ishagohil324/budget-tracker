@@ -62,6 +62,7 @@ const Analytics = ({ stats, transactions }) => {
       </div>
 
       <LineChart3D transactions={transactions} />
+      {/* <BarChart3D data={stats?.monthlyExpenses || []} /> */}
       <SpendingTrends transactions={transactions} />
     </div>
   );
