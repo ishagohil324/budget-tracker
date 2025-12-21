@@ -15,9 +15,15 @@ export const TransactionProvider = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated) {
       fetchTransactions();
-      fetchStats();
     }
   }, [isAuthenticated]);
+
+  // Calculate stats whenever transactions change
+  useEffect(() => {
+    if (transactions.length > 0) {
+      calculateStats();
+    }
+  }, [transactions]);
 
   // Fetch all transactions
   const fetchTransactions = async () => {
@@ -33,13 +39,52 @@ export const TransactionProvider = ({ children }) => {
     }
   };
 
-  // Fetch transaction stats
+  // Calculate stats from transactions
+  const calculateStats = () => {
+    let totalIncome = 0;
+    let totalExpense = 0;
+    const categoryExpenses = {};
+
+    transactions.forEach((t) => {
+      if (t.type === 'income') {
+        totalIncome += t.amount;
+      } else {
+        totalExpense += t.amount;
+        // Group by category
+        if (categoryExpenses[t.category]) {
+          categoryExpenses[t.category] += t.amount;
+        } else {
+          categoryExpenses[t.category] = t.amount;
+        }
+      }
+    });
+
+    // Convert to array for charts
+    const categoryExpensesArray = Object.keys(categoryExpenses).map((key) => ({
+      _id: key,
+      total: categoryExpenses[key],
+    }));
+
+    // Sort by total (highest first)
+    categoryExpensesArray.sort((a, b) => b.total - a.total);
+
+    setStats({
+      totalIncome,
+      totalExpense,
+      balance: totalIncome - totalExpense,
+      categoryExpenses: categoryExpensesArray,
+    });
+  };
+
+  // Fetch transaction stats (backup method)
   const fetchStats = async () => {
     try {
       const response = await transactionAPI.getStats();
       setStats(response.data);
     } catch (err) {
       console.error('Failed to fetch stats:', err);
+      // If API fails, calculate from transactions
+      calculateStats();
     }
   };
 
@@ -48,7 +93,6 @@ export const TransactionProvider = ({ children }) => {
     try {
       const response = await transactionAPI.create(data);
       setTransactions([response.data, ...transactions]);
-      await fetchStats(); // Refresh stats
       return { success: true };
     } catch (err) {
       return {
@@ -65,7 +109,6 @@ export const TransactionProvider = ({ children }) => {
       setTransactions(
         transactions.map((t) => (t._id === id ? response.data : t))
       );
-      await fetchStats(); // Refresh stats
       return { success: true };
     } catch (err) {
       return {
@@ -80,7 +123,6 @@ export const TransactionProvider = ({ children }) => {
     try {
       await transactionAPI.delete(id);
       setTransactions(transactions.filter((t) => t._id !== id));
-      await fetchStats(); // Refresh stats
       return { success: true };
     } catch (err) {
       return {

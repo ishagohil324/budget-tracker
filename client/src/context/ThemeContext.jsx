@@ -1,10 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 export const ThemeContext = createContext();
+
 const themes = {
   dark: {
     name: 'Dark Professional',
-    gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)',
+    gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #446ba0ff 100%)',
     primary: '#334155',
   },
   greenAccent: {
@@ -16,14 +17,14 @@ const themes = {
 
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(() => {
-  return localStorage.getItem('theme') || 'dark';
-});
-
-
+    return localStorage.getItem('theme') || 'dark';
+  });
 
   useEffect(() => {
     localStorage.setItem('theme', currentTheme);
-    document.body.style.background = themes[currentTheme];
+    // FIX: Access the gradient property!
+    document.body.style.background = themes[currentTheme].gradient;
+    document.body.style.minHeight = '100vh';
   }, [currentTheme]);
 
   const changeTheme = (themeName) => {
@@ -36,7 +37,5 @@ export const ThemeProvider = ({ children }) => {
     changeTheme,
   };
 
-  return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
