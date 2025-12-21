@@ -1,21 +1,25 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 export const ThemeContext = createContext();
-
 const themes = {
-  purple: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  blue: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
-  green: 'linear-gradient(135deg, #065f46 0%, #10b981 100%)',
-  pink: 'linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)',
-  dark: 'linear-gradient(135deg, #1f2937 0%, #111827 100%)',
-  sunset: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)',
-  ocean: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+  dark: {
+    name: 'Dark Professional',
+    gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)',
+    primary: '#334155',
+  },
+  greenAccent: {
+    name: 'Dark Green Accent',
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #064e3b 100%)',
+    primary: '#10b981',
+  },
 };
 
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'purple';
-  });
+  return localStorage.getItem('theme') || 'dark';
+});
+
+
 
   useEffect(() => {
     localStorage.setItem('theme', currentTheme);

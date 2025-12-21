@@ -95,32 +95,32 @@ const [showThemeMenu, setShowThemeMenu] = useState(false);
     </button>
 
     {showThemeMenu && (
-      <div className="absolute right-0 mt-2 w-56 glass rounded-lg shadow-xl p-3 z-50">
-        <p className="text-white font-semibold mb-2 text-sm">Choose Theme</p>
-        <div className="space-y-2 max-h-96 overflow-y-auto">
-          {Object.keys(themes).map((themeKey) => (
-            <button
-              key={themeKey}
-              onClick={() => {
-                changeTheme(themeKey);
-                setShowThemeMenu(false);
-              }}
-              className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-3 ${
-                currentTheme === themeKey
-                  ? 'bg-white bg-opacity-20 text-white font-semibold'
-                  : 'text-gray-300 hover:bg-white hover:bg-opacity-10'
-              }`}
-            >
-              <span
-                className="w-6 h-6 rounded-full border-2 border-white"
-                style={{ background: themes[themeKey].gradient }}
-              />
-              <span className="text-sm">{themes[themeKey].name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    )}
+  <div className="absolute right-0 mt-2 w-56 bg-gray-900 bg-opacity-95 backdrop-blur-md rounded-lg shadow-xl p-3 z-50 border border-gray-700">
+    <p className="text-white font-semibold mb-3 text-sm">Choose Theme 🎨</p>
+    <div className="space-y-2 max-h-96 overflow-y-auto">
+      {Object.keys(themes).map((themeKey) => (
+        <button
+          key={themeKey}
+          onClick={() => {
+            changeTheme(themeKey);
+            setShowThemeMenu(false);
+          }}
+          className={`w-full text-left px-3 py-2.5 rounded-lg transition-all flex items-center gap-3 ${
+            currentTheme === themeKey
+              ? 'bg-blue-600 text-white font-semibold ring-2 ring-blue-400'
+              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+          }`}
+        >
+          <span
+            className="w-8 h-8 rounded-full border-2 border-white shadow-lg flex-shrink-0"
+            style={{ background: themes[themeKey].gradient }}
+          />
+          <span className="text-sm font-medium">{themes[themeKey].name}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+)}
   </div>
 
   {/* User Info */}
