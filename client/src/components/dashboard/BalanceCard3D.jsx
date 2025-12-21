@@ -97,13 +97,9 @@ const BalanceCard3D = ({ balance }) => {
           </div>
           
           <div className="flex items-center justify-between">
-            <span className="text-gray-400 text-sm">Updated just now</span>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              className="w-8 h-8 border-2 border-white border-t-transparent rounded-full"
-            />
-          </div>
+  <span className="text-gray-400 text-sm">Updated just now</span>
+</div>
+
         </div>
       </GlassCard>
     </motion.div>
