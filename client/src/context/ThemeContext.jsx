@@ -13,6 +13,11 @@ const themes = {
     gradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #064e3b 100%)',
     primary: '#10b981',
   },
+  pinkberry: {
+    name: 'pink berry ',
+    gradient: 'linear-gradient(135deg, #1f071fff 0%, #180e19ff 50%, #4a0634ff 100%)',
+    primary: '#10b981',
+  },
 };
 
 export const ThemeProvider = ({ children }) => {
