@@ -5,8 +5,8 @@ export const ThemeContext = createContext();
 const themes = {
   dark: {
     name: 'Dark Professional',
-    gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #446ba0ff 100%)',
-    primary: '#334155',
+    gradient: 'linear-gradient(135deg, #1e293b 0%, #2b2e44ff 50%, #1c0d5bff 100%)',
+    primary: '#222f41ff',
   },
   greenAccent: {
     name: 'Dark Green Accent',

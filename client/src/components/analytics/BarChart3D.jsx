@@ -25,9 +25,10 @@ const BarChart3D = ({ data }) => {
             <Tooltip
               formatter={(value) => formatCurrency(value)}
               contentStyle={{
-                backgroundColor: 'rgba(0,0,0,0.8)',
+                backgroundColor: 'rgba(226, 11, 11, 0.8)',
                 border: 'none',
                 borderRadius: '8px',
+                color: '#fff',
               }}
             />
             <Bar dataKey="value" radius={[8, 8, 0, 0]}>
