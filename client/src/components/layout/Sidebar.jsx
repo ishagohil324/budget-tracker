@@ -78,7 +78,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
           {/* Footer */}
           <div className="border-t border-white border-opacity-20 pt-4 text-center text-gray-400 text-sm">
-            <p>© 2024 Budget Tracker</p>
+            <p>© 2025 Budget Tracker</p>
             <p className="mt-1">Made with 💜</p>
           </div>
         </div>

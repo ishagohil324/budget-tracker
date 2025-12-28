@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Calendar, Edit2, Save } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useTransactions } from '../hooks/useTransactions';
+import { useBudgets } from '../hooks/useBudgets';
 import GlassCard from '../components/common/GlassCard';
 import Button3D from '../components/common/Button3D';
 import Alert from '../components/common/Alert';
@@ -9,6 +11,8 @@ import { formatDate } from '../utils/formatters';
 
 const ProfilePage = () => {
   const { user } = useAuth();
+  const { transactions } = useTransactions();
+  const { budgets } = useBudgets();
   const [isEditing, setIsEditing] = useState(false);
   const [alert, setAlert] = useState(null);
   const [formData, setFormData] = useState({
@@ -22,6 +26,9 @@ const ProfilePage = () => {
     setAlert({ type: 'success', message: 'Profile updated successfully!' });
     setIsEditing(false);
   };
+
+  // Get unique categories count
+  const uniqueCategories = [...new Set(transactions.map(t => t.category))].length;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -45,15 +52,9 @@ const ProfilePage = () => {
         <GlassCard>
           <div className="flex flex-col md:flex-row items-center gap-6 mb-8">
             {/* Avatar */}
-<div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden">
-  <img
-    src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${user?.email}`}
-    alt="Avatar"
-    className="w-full h-full object-cover drop-shadow-[0_0_15px_rgba(99,102,241,0.6)]"
-  />
-</div>
-
-
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-6xl font-bold text-white border-4 border-white shadow-2xl">
+              {user?.name?.charAt(0).toUpperCase() || '👤'}
+            </div>
 
             {/* User Info */}
             <div className="flex-1 text-center md:text-left">
@@ -126,7 +127,7 @@ const ProfilePage = () => {
         </GlassCard>
       </motion.div>
 
-      {/* Account Stats */}
+      {/* Account Stats - NOW WITH REAL DATA! */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -135,18 +136,27 @@ const ProfilePage = () => {
         <GlassCard>
           <h3 className="text-2xl font-bold text-white mb-6">Account Statistics</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            <div>
-              <p className="text-4xl font-bold text-blue-400 mb-2">0</p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-4 bg-blue-500 bg-opacity-20 rounded-xl border border-blue-500"
+            >
+              <p className="text-5xl font-bold text-blue-400 mb-2">{transactions.length}</p>
               <p className="text-gray-300">Total Transactions</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-purple-400 mb-2">0</p>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-4 bg-purple-500 bg-opacity-20 rounded-xl border border-purple-500"
+            >
+              <p className="text-5xl font-bold text-purple-400 mb-2">{budgets.length}</p>
               <p className="text-gray-300">Active Budgets</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-green-400 mb-2">0</p>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="p-4 bg-green-500 bg-opacity-20 rounded-xl border border-green-500"
+            >
+              <p className="text-5xl font-bold text-green-400 mb-2">{uniqueCategories}</p>
               <p className="text-gray-300">Categories</p>
-            </div>
+            </motion.div>
           </div>
         </GlassCard>
       </motion.div>
