@@ -80,11 +80,11 @@ exports.updateBudget = async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    const { category, limit, spent, period, startDate, endDate, alertThreshold } = req.body;
+    const { category, limit, period, startDate, endDate, alertThreshold } = req.body;
 
     budget = await Budget.findByIdAndUpdate(
       req.params.id,
-      { category, limit, spent, period, startDate, endDate, alertThreshold },
+      { category, limit,  period, startDate, endDate, alertThreshold },
       { new: true }
     );
 
