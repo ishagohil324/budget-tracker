@@ -61,7 +61,8 @@ exports.createTransaction = async (req, res) => {
       });
 
       if (budget) {
-        budget.spent += amount;
+       budget.spent = Number(budget.spent) + Number(amount);
+
         await budget.save();
       }
     }
