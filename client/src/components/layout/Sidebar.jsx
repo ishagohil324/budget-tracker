@@ -7,6 +7,7 @@ import {
   TrendingUp, 
   Tag, 
   User,
+  Target,
   X 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,8 +19,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     { path: '/budgets', icon: Wallet, label: 'Budgets' },
     { path: '/analytics', icon: TrendingUp, label: 'Analytics' },
     { path: '/categories', icon: Tag, label: 'Categories' },
+    { path: '/goals', icon: Target, label: 'Goals' },
     { path: '/profile', icon: User, label: 'Profile' },
+    
   ];
+
 
   return (
     <>

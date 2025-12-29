@@ -4,6 +4,9 @@ import { AuthProvider } from './context/AuthContext';
 import { TransactionProvider } from './context/TransactionContext';
 import { BudgetProvider } from './context/BudgetContext';
 import { ThemeProvider } from './context/ThemeContext';
+import GoalsPage from './pages/GoalsPage';
+
+
 
 // Auth Components
 import Login from './components/auth/Login';
@@ -100,6 +103,16 @@ function App() {
                     </PrivateRoute>
                   }
                 />
+                <Route
+  path="/goals"
+  element={
+    <PrivateRoute>
+      <AppLayout>
+        <GoalsPage />
+      </AppLayout>
+    </PrivateRoute>
+  }
+/>
                 <Route
                   path="/categories"
                   element={

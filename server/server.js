@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const goalRoutes = require('./routes/goals');
-app.use('/api/goals', goalRoutes);
+
 
 // Load environment variables
 dotenv.config();
@@ -29,6 +29,7 @@ app.use(express.json());
    app.use('/api/transactions', transactionRoutes);
    app.use('/api/budgets', budgetRoutes);
    app.use('/api/categories', categoryRoutes);
+   app.use('/api/goals', goalRoutes);
 
 // Test route
 app.get('/', (req, res) => {
