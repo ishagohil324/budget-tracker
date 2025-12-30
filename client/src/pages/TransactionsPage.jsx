@@ -9,6 +9,11 @@ import Loading from '../components/common/Loading';
 import Alert from '../components/common/Alert';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import { TRANSACTION_TYPES, PAYMENT_METHODS } from '../utils/constants';
+import { Download } from 'lucide-react';
+import { exportTransactionsToPDF, exportTransactionsToExcel } from '../utils/exportUtils';
+import { useAuth } from '../hooks/useAuth';
+
+const { user } = useAuth();
 
 const TransactionsPage = () => {
   const { transactions, loading, createTransaction, updateTransaction, deleteTransaction } = useTransactions();
@@ -102,6 +107,26 @@ const TransactionsPage = () => {
           Add Transaction
         </Button3D>
       </div>
+      {/* Export Dropdown */}
+<div className="relative group">
+  <Button3D icon={Download} variant="primary">
+    Export
+  </Button3D>
+  <div className="hidden group-hover:block absolute right-0 mt-2 w-48 glass rounded-lg shadow-xl p-2 z-50">
+    <button
+      onClick={() => exportTransactionsToPDF(transactions, stats, user?.name)}
+      className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
+    >
+      📄 Export as PDF
+    </button>
+    <button
+      onClick={() => exportTransactionsToExcel(transactions, stats)}
+      className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
+    >
+      📊 Export as Excel
+    </button>
+  </div>
+</div>
 
       {/* Search */}
       <GlassCard>
