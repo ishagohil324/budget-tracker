@@ -159,6 +159,13 @@ const GoalsPage = () => {
           Add Goal
         </Button3D>
       </div>
+      <Button3D
+  icon={Download}
+  variant="secondary"
+  onClick={() => exportGoalsToPDF(goals, user?.name)}
+>
+  Export PDF
+</Button3D>
 
       {/* Goals Grid */}
       {goals.length === 0 ? (
