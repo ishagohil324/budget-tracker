@@ -151,24 +151,64 @@ exports.getTransactionStats = async (req, res) => {
   try {
     const userId = req.user.user.id;
 
-    // Total income
-    const incomeResult = await Transaction.aggregate([
-      { $match: { user: userId, type: 'income' } },
-      { $group: { _id: null, total: { $sum: '$amount' } } }
-    ]);
-    const totalIncome = incomeResult.length > 0 ? incomeResult[0].total : 0;
+    // 🔥 CURRENT MONTH RANGE
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
 
-    // Total expense
-    const expenseResult = await Transaction.aggregate([
-      { $match: { user: userId, type: 'expense' } },
-      { $group: { _id: null, total: { $sum: '$amount' } } }
-    ]);
-    const totalExpense = expenseResult.length > 0 ? expenseResult[0].total : 0;
+    const endOfMonth = new Date();
+    endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+    endOfMonth.setDate(0);
+    endOfMonth.setHours(23, 59, 59, 999);
 
-    // Category-wise expenses
+    const stats = await Transaction.aggregate([
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(userId),
+          date: {
+            $gte: startOfMonth,
+            $lte: endOfMonth
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: {
+              $cond: [{ $eq: ['$type', 'income'] }, '$amount', 0]
+            }
+          },
+          totalExpense: {
+            $sum: {
+              $cond: [{ $eq: ['$type', 'expense'] }, '$amount', 0]
+            }
+          }
+        }
+      }
+    ]);
+
+    const totalIncome = stats[0]?.totalIncome || 0;
+    const totalExpense = stats[0]?.totalExpense || 0;
+
+    // CATEGORY WISE (MONTHLY)
     const categoryExpenses = await Transaction.aggregate([
-      { $match: { user: userId, type: 'expense' } },
-      { $group: { _id: '$category', total: { $sum: '$amount' } } },
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(userId),
+          type: 'expense',
+          date: {
+            $gte: startOfMonth,
+            $lte: endOfMonth
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$category',
+          total: { $sum: '$amount' }
+        }
+      },
       { $sort: { total: -1 } }
     ]);
 

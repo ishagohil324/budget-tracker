@@ -57,8 +57,8 @@ const LineChart3D = ({ transactions }) => {
               }}
             />
             <Legend />
-            <Line type="monotone" dataKey="income" stroke="#10B981" strokeWidth={3} name="Income" />
-            <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={3} name="Expense" />
+            <Line type="monotone" dataKey="income" stroke="#83b910ff" strokeWidth={3} name="Income" />
+            <Line type="monotone" dataKey="expense" stroke="#ef4444ff" strokeWidth={3} name="Expense" />
           </LineChart>
         </ResponsiveContainer>
       )}

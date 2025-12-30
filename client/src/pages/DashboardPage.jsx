@@ -21,9 +21,11 @@ import AIInsights from '../components/dashboard/AIInsights';
 
 const DashboardPage = () => {
   const { stats, transactions, loading: transLoading } = useTransactions();
-  const { alerts, loading: budgetLoading } = useBudgets();
+  const { alerts, budgets, loading: budgetLoading } = useBudgets();
+
+  // const { alerts, loading: budgetLoading } = useBudgets();
    const { user } = useAuth();
-   const { budgets } = useBudgets();
+  //  const { budgets } = useBudgets();
 
  
 
@@ -50,7 +52,14 @@ const DashboardPage = () => {
     variant="success"
     onClick={() => {
       const goalsData = []; // Empty for now, we'll fetch later
-      exportMonthlyReport(transactions || [], alerts || [], goalsData, stats, user?.name);
+      exportMonthlyReport(
+  transactions || [],
+  budgets || [],
+  goalsData || [],
+  stats,
+  user?.name
+);
+
 
     }}
   >
