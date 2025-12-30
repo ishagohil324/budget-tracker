@@ -8,6 +8,10 @@ import Modal from '../components/common/Modal';
 import Alert from '../components/common/Alert';
 import Loading from '../components/common/Loading';
 import { formatCurrency, formatDate } from '../utils/formatters';
+import { Download } from 'lucide-react';
+import { exportGoalsToPDF } from '../utils/exportUtils';
+import { useAuth } from '../hooks/useAuth';
+const { user } = useAuth();
 
 const GoalsPage = () => {
   const [goals, setGoals] = useState([]);

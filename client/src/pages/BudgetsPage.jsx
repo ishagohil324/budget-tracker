@@ -9,6 +9,10 @@ import Loading from '../components/common/Loading';
 import Alert from '../components/common/Alert';
 import { formatCurrency } from '../utils/formatters';
 import { BUDGET_PERIODS, ALERT_THRESHOLDS } from '../utils/constants';
+import { Download } from 'lucide-react';
+import { exportBudgetsToPDF } from '../utils/exportUtils';
+import { useAuth } from '../hooks/useAuth';
+const { user } = useAuth();
 
 const BudgetsPage = () => {
   const { budgets, loading, createBudget, updateBudget, deleteBudget } = useBudgets();
@@ -102,6 +106,13 @@ const BudgetsPage = () => {
           Add Budget
         </Button3D>
       </div>
+      <Button3D
+  icon={Download}
+  variant="secondary"
+  onClick={() => exportBudgetsToPDF(budgets, user?.name)}
+>
+  Export PDF
+</Button3D>
 
       {/* Budgets Grid */}
       {budgets.length === 0 ? (
