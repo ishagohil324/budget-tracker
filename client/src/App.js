@@ -104,15 +104,15 @@ function App() {
                   }
                 />
                 <Route
-  path="/goals"
-  element={
-    <PrivateRoute>
-      <AppLayout>
-        <GoalsPage />
-      </AppLayout>
-    </PrivateRoute>
-  }
-/>
+                  path="/goals"
+                  element={
+                    <PrivateRoute>
+                      <AppLayout>
+                        <GoalsPage />
+                      </AppLayout>
+                    </PrivateRoute>
+                  }
+                />
                 <Route
                   path="/categories"
                   element={
