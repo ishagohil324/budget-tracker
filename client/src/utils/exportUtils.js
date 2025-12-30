@@ -289,6 +289,8 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
   });
 
   // Page 3: Budgets
+// Page 3: Budgets
+if (budgets.length > 0) {
   doc.addPage();
   doc.setFontSize(16);
   doc.setTextColor(16, 185, 129);
@@ -297,19 +299,23 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
   const budgetTableData = budgets.map((b) => [
     b.category,
     formatCurrency(b.limit),
-    formatCurrency(b.spent),
-    `${Math.round((b.spent / b.limit) * 100)}%`,
+    formatCurrency(b.spent || 0),
+    b.limit > 0 ? `${Math.round((b.spent / b.limit) * 100)}%` : '0%',
   ]);
 
-  autoTable(doc,{
+  autoTable(doc, {
     head: [['Category', 'Limit', 'Spent', 'Usage']],
     body: budgetTableData,
     startY: 30,
     theme: 'striped',
     headStyles: { fillColor: [16, 185, 129] },
   });
+}
+
+
 
   // Page 4: Goals
+ if (goals.length > 0) {
   doc.addPage();
   doc.setFontSize(16);
   doc.setTextColor(16, 185, 129);
@@ -319,7 +325,9 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
     g.name,
     formatCurrency(g.targetAmount),
     formatCurrency(g.currentAmount),
-    `${Math.round((g.currentAmount / g.targetAmount) * 100)}%`,
+    g.targetAmount > 0
+      ? `${Math.round((g.currentAmount / g.targetAmount) * 100)}%`
+      : '0%',
   ]);
 
   autoTable(doc, {
@@ -329,6 +337,8 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
     theme: 'striped',
     headStyles: { fillColor: [16, 185, 129] },
   });
+}
+
 
   // Add page numbers
   const pageCount = doc.internal.getNumberOfPages();

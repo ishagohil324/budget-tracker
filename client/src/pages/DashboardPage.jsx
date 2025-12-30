@@ -13,6 +13,7 @@ import GlassCard from '../components/common/GlassCard';
 import Button3D from '../components/common/Button3D'; // ADD THIS
 import { formatCurrency } from '../utils/formatters';
 import { exportMonthlyReport } from '../utils/exportUtils'; // ADD THIS
+import AIInsights from '../components/dashboard/AIInsights';
 // import { Download } from 'lucide-react';
 // import Button3D from '../components/common/Button3D';
 // import { exportMonthlyReport } from '../utils/exportUtils';
@@ -125,6 +126,15 @@ const DashboardPage = () => {
           <QuickActions />
         </div>
       </div>
+
+      {/* AI Insights */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.6 }}
+>
+  <AIInsights transactions={transactions || []} budgets={budgets || []} stats={stats} />
+</motion.div>
     </div>
   );
 };
