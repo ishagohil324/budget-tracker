@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
+
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { formatCurrency, formatDate } from './formatters';
@@ -38,7 +39,7 @@ export const exportTransactionsToPDF = (transactions, stats, userName) => {
     t.paymentMethod,
   ]);
 
-  doc.autoTable({
+  autoTable(doc, {
     head: [['Date', 'Type', 'Category', 'Description', 'Amount', 'Payment']],
     body: tableData,
     startY: 85,
@@ -148,7 +149,7 @@ export const exportBudgetsToPDF = (budgets, userName) => {
     b.spent >= b.limit ? 'Over Budget' : b.spent >= b.alertThreshold * b.limit / 100 ? 'Warning' : 'On Track',
   ]);
 
-  doc.autoTable({
+  autoTable(doc, {
     head: [['Category', 'Period', 'Limit', 'Spent', 'Progress', 'Status']],
     body: tableData,
     startY: 45,
@@ -203,7 +204,7 @@ export const exportGoalsToPDF = (goals, userName) => {
     g.isCompleted ? 'Completed' : 'In Progress',
   ]);
 
-  doc.autoTable({
+ autoTable(doc, {
     head: [['Goal', 'Category', 'Target', 'Current', 'Progress', 'Deadline', 'Status']],
     body: tableData,
     startY: 45,
@@ -228,6 +229,8 @@ export const exportGoalsToPDF = (goals, userName) => {
 
   // Save PDF
   doc.save(`goals_${new Date().getTime()}.pdf`);
+  console.log('autoTable:', autoTable);
+
 };
 
 // Export Monthly Report (Combined)
@@ -277,7 +280,7 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
     formatCurrency(t.amount),
   ]);
 
-  doc.autoTable({
+  autoTable(doc,{
     head: [['Date', 'Type', 'Category', 'Amount']],
     body: transTableData,
     startY: 30,
@@ -298,7 +301,7 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
     `${Math.round((b.spent / b.limit) * 100)}%`,
   ]);
 
-  doc.autoTable({
+  autoTable(doc,{
     head: [['Category', 'Limit', 'Spent', 'Usage']],
     body: budgetTableData,
     startY: 30,
@@ -319,7 +322,7 @@ export const exportMonthlyReport = (transactions, budgets, goals, stats, userNam
     `${Math.round((g.currentAmount / g.targetAmount) * 100)}%`,
   ]);
 
-  doc.autoTable({
+  autoTable(doc, {
     head: [['Goal', 'Target', 'Current', 'Progress']],
     body: goalsTableData,
     startY: 30,

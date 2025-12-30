@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, Edit, Target } from 'lucide-react';
+import { Plus, Trash2, Edit, Target, Download } from 'lucide-react'; // Added Download
 import { useBudgets } from '../hooks/useBudgets';
+import { useAuth } from '../hooks/useAuth'; // ADD THIS
 import GlassCard from '../components/common/GlassCard';
 import Button3D from '../components/common/Button3D';
 import Modal from '../components/common/Modal';
@@ -9,16 +10,19 @@ import Loading from '../components/common/Loading';
 import Alert from '../components/common/Alert';
 import { formatCurrency } from '../utils/formatters';
 import { BUDGET_PERIODS, ALERT_THRESHOLDS } from '../utils/constants';
-import { Download } from 'lucide-react';
-import { exportBudgetsToPDF } from '../utils/exportUtils';
-import { useAuth } from '../hooks/useAuth';
-const { user } = useAuth();
+import { exportBudgetsToPDF } from '../utils/exportUtils'; 
+// import { Download } from 'lucide-react';
+// import { useAuth } from '../hooks/useAuth';
+// import { exportBudgetsToPDF } from '../utils/exportUtils';
 
 const BudgetsPage = () => {
   const { budgets, loading, createBudget, updateBudget, deleteBudget } = useBudgets();
+  const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBudget, setEditingBudget] = useState(null);
   const [alert, setAlert] = useState(null);
+  
+
 
   const [formData, setFormData] = useState({
     category: '',
@@ -96,23 +100,27 @@ const BudgetsPage = () => {
     <div className="space-y-6">
       {alert && <Alert type={alert.type} message={alert.message} onClose={() => setAlert(null)} />}
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-4xl font-bold text-white mb-2">Budgets 🎯</h1>
-          <p className="text-gray-300">Set spending limits for your categories</p>
-        </div>
-        <Button3D icon={Plus} onClick={() => handleOpenModal()}>
-          Add Budget
-        </Button3D>
-      </div>
-      <Button3D
-  icon={Download}
-  variant="secondary"
-  onClick={() => exportBudgetsToPDF(budgets, user?.name)}
->
-  Export PDF
-</Button3D>
+     {/* Header */}
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div>
+    <h1 className="text-4xl font-bold text-white mb-2">Budgets 🎯</h1>
+    <p className="text-gray-300">Set spending limits for your categories</p>
+  </div>
+  
+  <div className="flex gap-3">
+    <Button3D icon={Plus} onClick={() => handleOpenModal()}>
+      Add Budget
+    </Button3D>
+    
+    <Button3D
+      icon={Download}
+      variant="secondary"
+      onClick={() => exportBudgetsToPDF(budgets || [], user?.name || 'User')}
+    >
+      Export PDF
+    </Button3D>
+  </div>
+</div>
 
       {/* Budgets Grid */}
       {budgets.length === 0 ? (

@@ -11,7 +11,8 @@ import { formatCurrency, formatDate } from '../utils/formatters';
 import { Download } from 'lucide-react';
 import { exportGoalsToPDF } from '../utils/exportUtils';
 import { useAuth } from '../hooks/useAuth';
-const { user } = useAuth();
+// import { useAuth } from '../hooks/useAuth'; // ADD THIS
+
 
 const GoalsPage = () => {
   const [goals, setGoals] = useState([]);
@@ -21,6 +22,7 @@ const GoalsPage = () => {
   const [alert, setAlert] = useState(null);
   const [addMoneyModal, setAddMoneyModal] = useState(null);
   const [addAmount, setAddAmount] = useState('');
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -149,23 +151,27 @@ const GoalsPage = () => {
     <div className="space-y-8">
       {alert && <Alert type={alert.type} message={alert.message} onClose={() => setAlert(null)} />}
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-4xl font-bold text-white mb-2 neon-text">Financial Goals 🎯</h1>
-          <p className="text-gray-300">Track your savings goals and achieve them!</p>
-        </div>
-        <Button3D icon={Plus} onClick={() => handleOpenModal()}>
-          Add Goal
-        </Button3D>
-      </div>
-      <Button3D
-  icon={Download}
-  variant="secondary"
-  onClick={() => exportGoalsToPDF(goals, user?.name)}
->
-  Export PDF
-</Button3D>
+     {/* Header */}
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div>
+    <h1 className="text-4xl font-bold text-white mb-2 neon-text">Financial Goals 🎯</h1>
+    <p className="text-gray-300">Track your savings goals and achieve them!</p>
+  </div>
+  
+  <div className="flex gap-3">
+    <Button3D icon={Plus} onClick={() => handleOpenModal()}>
+      Add Goal
+    </Button3D>
+    
+    <Button3D
+      icon={Download}
+      variant="secondary"
+      onClick={() => exportGoalsToPDF(goals || [], user?.name || 'User')}
+    >
+      Export PDF
+    </Button3D>
+  </div>
+</div>
 
       {/* Goals Grid */}
       {goals.length === 0 ? (

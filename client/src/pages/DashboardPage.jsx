@@ -1,19 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, Wallet, AlertCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown, Wallet, AlertCircle, Download } from 'lucide-react'; // Added Download
 import { useTransactions } from '../hooks/useTransactions';
 import { useBudgets } from '../hooks/useBudgets';
+import { useAuth } from '../hooks/useAuth'; // ADD THIS
 import StatsCard from '../components/dashboard/StatsCard';
 import BalanceCard3D from '../components/dashboard/BalanceCard3D';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import QuickActions from '../components/dashboard/QuickActions';
 import Loading from '../components/common/Loading';
 import GlassCard from '../components/common/GlassCard';
+import Button3D from '../components/common/Button3D'; // ADD THIS
 import { formatCurrency } from '../utils/formatters';
+import { exportMonthlyReport } from '../utils/exportUtils'; // ADD THIS
+// import { Download } from 'lucide-react';
+// import Button3D from '../components/common/Button3D';
+// import { exportMonthlyReport } from '../utils/exportUtils';
+// import { useAuth } from '../hooks/useAuth';
 
 const DashboardPage = () => {
   const { stats, transactions, loading: transLoading } = useTransactions();
   const { alerts, loading: budgetLoading } = useBudgets();
+   const { user } = useAuth();
+   const { budgets } = useBudgets();
+
+ 
 
   if (transLoading || budgetLoading) {
     return <Loading fullScreen />;
@@ -22,13 +33,29 @@ const DashboardPage = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <h1 className="text-4xl font-bold text-white mb-2">Dashboard 📊</h1>
-        <p className="text-gray-300">Welcome back! Here's your financial overview</p>
-      </motion.div>
+     {/* Header */}
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+  >
+    <h1 className="text-4xl font-bold text-white mb-2">Dashboard 📊</h1>
+    <p className="text-gray-300">Welcome back! Here's your financial overview</p>
+  </motion.div>
+
+  {/* Export Button */}
+  <Button3D
+    icon={Download}
+    variant="success"
+    onClick={() => {
+      const goalsData = []; // Empty for now, we'll fetch later
+      exportMonthlyReport(transactions || [], alerts || [], goalsData, stats, user?.name);
+
+    }}
+  >
+    Monthly Report
+  </Button3D>
+</div>
 
       {/* 3D Balance Card */}
       <BalanceCard3D balance={stats?.balance || 0} />

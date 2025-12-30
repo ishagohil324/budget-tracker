@@ -10,17 +10,24 @@ import Alert from '../components/common/Alert';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import { TRANSACTION_TYPES, PAYMENT_METHODS } from '../utils/constants';
 import { Download } from 'lucide-react';
-import { exportTransactionsToPDF, exportTransactionsToExcel } from '../utils/exportUtils';
+import { exportTransactionsToPDF, exportTransactionsToExcel } from '../utils/exportUtils'
+// import { Download } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+// import { exportTransactionsToPDF, exportTransactionsToExcel } from '../utils/exportUtils';
 
-const { user } = useAuth();
+
 
 const TransactionsPage = () => {
   const { transactions, loading, createTransaction, updateTransaction, deleteTransaction } = useTransactions();
+  const { user } = useAuth();
+  const { stats } = useTransactions();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [alert, setAlert] = useState(null);
+
+
+  
 
   const [formData, setFormData] = useState({
     type: 'expense',
@@ -97,34 +104,39 @@ const TransactionsPage = () => {
     <div className="space-y-6">
       {alert && <Alert type={alert.type} message={alert.message} onClose={() => setAlert(null)} />}
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-4xl font-bold text-white mb-2">Transactions 💳</h1>
-          <p className="text-gray-300">Manage your income and expenses</p>
-        </div>
-        <Button3D icon={Plus} onClick={() => handleOpenModal()}>
-          Add Transaction
-        </Button3D>
+     {/* Header */}
+<div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div>
+    <h1 className="text-4xl font-bold text-white mb-2">Transactions 💳</h1>
+    <p className="text-gray-300">Manage your income and expenses</p>
+  </div>
+  
+  <div className="flex gap-3">
+    {/* Add Transaction Button */}
+    <Button3D icon={Plus} onClick={() => handleOpenModal()}>
+      Add Transaction
+    </Button3D>
+
+    {/* Export Dropdown */}
+    <div className="relative group">
+      <Button3D icon={Download} variant="secondary">
+        Export
+      </Button3D>
+      <div className="hidden group-hover:block absolute right-0 mt-2 w-48 bg-gray-900 bg-opacity-95 backdrop-blur-md rounded-lg shadow-xl p-2 z-50 border border-gray-700">
+        <button
+          onClick={() => exportTransactionsToPDF(transactions || [], stats, user?.name || 'User')     }
+          className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
+        >
+          📄 Export as PDF
+        </button>
+        <button
+          onClick={() => exportTransactionsToExcel(transactions || [], stats)}
+          className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
+        >
+          📊 Export as Excel
+        </button>
       </div>
-      {/* Export Dropdown */}
-<div className="relative group">
-  <Button3D icon={Download} variant="primary">
-    Export
-  </Button3D>
-  <div className="hidden group-hover:block absolute right-0 mt-2 w-48 glass rounded-lg shadow-xl p-2 z-50">
-    <button
-      onClick={() => exportTransactionsToPDF(transactions, stats, user?.name)}
-      className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
-    >
-      📄 Export as PDF
-    </button>
-    <button
-      onClick={() => exportTransactionsToExcel(transactions, stats)}
-      className="w-full text-left px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-10 transition-colors"
-    >
-      📊 Export as Excel
-    </button>
+    </div>
   </div>
 </div>
 
