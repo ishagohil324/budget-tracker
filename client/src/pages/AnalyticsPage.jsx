@@ -11,7 +11,7 @@ import { formatCurrency } from '../utils/formatters';
 import { CHART_COLORS } from '../utils/constants';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import RadarSpending from '../components/analytics/RadarSpending';
-import SpendingHeatmap from '../components/analytics/SpendingHeatmap';
+// import SpendingHeatmap from '../components/analytics/SpendingHeatmap';
 
 
 
@@ -28,18 +28,7 @@ const AnalyticsPage = () => {
   })) || [];
 
   const topCategories = categoryData.slice(0, 5);
-  const heatmapData = [];
-
-monthlyTrendData.forEach(month => {
-  stats?.categoryExpenses?.forEach(cat => {
-    heatmapData.push({
-      category: cat._id,
-      month: month.month,
-      value: Math.floor(Math.random() * cat.total), // replace later with real month-category logic
-    });
-  });
-});
-
+  
 
   // Monthly trend data
 
@@ -324,12 +313,7 @@ const monthlyTrendData = getMonthlyData();
   <RadarSpending data={topCategories} />
 </GlassCard>
 
-<GlassCard>
-  <h2 className="text-2xl font-bold text-white mb-6">
-    Spending Heatmap 🔥
-  </h2>
-  <SpendingHeatmap data={heatmapData} />
-</GlassCard>
+
 
 
     </div>
