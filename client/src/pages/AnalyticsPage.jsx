@@ -11,6 +11,8 @@ import { formatCurrency } from '../utils/formatters';
 import { CHART_COLORS } from '../utils/constants';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
 import RadarSpending from '../components/analytics/RadarSpending';
+import SpendingHeatmap from '../components/analytics/SpendingHeatmap';
+
 
 
 const AnalyticsPage = () => {
