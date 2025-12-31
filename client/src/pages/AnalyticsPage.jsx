@@ -10,6 +10,8 @@ import Loading from '../components/common/Loading';
 import { formatCurrency } from '../utils/formatters';
 import { CHART_COLORS } from '../utils/constants';
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import RadarSpending from '../components/analytics/RadarSpending';
+
 
 const AnalyticsPage = () => {
   const { stats, transactions, loading } = useTransactions();
@@ -229,17 +231,17 @@ const monthlyTrendData = getMonthlyData();
                   <YAxis stroke="#fff" />
                   <Tooltip
   formatter={(value) => (
-    <span style={{ color: '#fff', fontWeight: 600 }}>
+    <span style={{ color: '#141313ff', fontWeight: 600 }}>
       {formatCurrency(value)}
     </span>
   )}
   contentStyle={{
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(250, 243, 243, 0.85)',
     border: 'none',
     borderRadius: '10px',
     boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
   }}
-  labelStyle={{ color: '#fff', fontWeight: 'bold' }}
+  labelStyle={{ color: '#111111ff', fontWeight: 'bold' }}
 />
 
                   <Bar dataKey="value" radius={[8, 8, 0, 0]}>
@@ -255,73 +257,7 @@ const monthlyTrendData = getMonthlyData();
       </div>
 
       {/* Line Chart - Monthly Trend */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
-        <GlassCard>
-          <h2 className="text-2xl font-bold text-white mb-6">6-Month Trend</h2>
-          {monthlyTrendData.every((d) => d.income === 0 && d.expense === 0) ? (
-            <p className="text-gray-300 text-center py-12">
-              No transaction history yet
-            </p>
-          ) : (
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={monthlyTrendData}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.1)"
-                />
-                <XAxis dataKey="month" stroke="#fff" />
-                <YAxis stroke="#fff" />
-                <Tooltip
-                  formatter={(value) => formatCurrency(value)}
-                  contentStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    border: 'none',
-                    borderRadius: '8px',
-                  }}
-                />
-                <Legend />
-                <defs>
-  <linearGradient id="incomeGlow" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stopColor="#00F5A0" />
-    <stop offset="100%" stopColor="#00D9F5" />
-  </linearGradient>
-
-  <linearGradient id="expenseGlow" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0%" stopColor="#FF4D4D" />
-    <stop offset="100%" stopColor="#FF00C8" />
-  </linearGradient>
-</defs>
-
-<Line
-  type="monotone"
-  dataKey="income"
-  stroke="url(#incomeGlow)"
-  strokeWidth={4}
-  dot={{ r: 6, strokeWidth: 2 }}
-  activeDot={{ r: 9 }}
-  name="Income"
-/>
-
-<Line
-  type="monotone"
-  dataKey="expense"
-  stroke="url(#expenseGlow)"
-  strokeWidth={4}
-  dot={{ r: 6, strokeWidth: 2 }}
-  activeDot={{ r: 9 }}
-  name="Expense"
-/>
-
-              </LineChart>
-            </ResponsiveContainer>
-          )}
-        </GlassCard>
-      </motion.div>
-
+     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} > <GlassCard> <h2 className="text-2xl font-bold text-white mb-6">6-Month Trend</h2> {monthlyTrendData.every((d) => d.income === 0 && d.expense === 0) ? ( <p className="text-gray-300 text-center py-12"> No transaction history yet </p> ) : ( <ResponsiveContainer width="100%" height={300}> <LineChart data={monthlyTrendData}> <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" /> <XAxis dataKey="month" stroke="#fff" /> <YAxis stroke="#fff" /> <Tooltip formatter={(value) => formatCurrency(value)} contentStyle={{ backgroundColor: 'rgba(248, 242, 242, 0.8)', border: 'none', borderRadius: '8px', }} /> <Legend /> <Line type="monotone" dataKey="income" stroke="#10B981" strokeWidth={3} name="Income" /> <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={3} name="Expense" /> </LineChart> </ResponsiveContainer> )} </GlassCard> </motion.div>
       {/* Spending Insights */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -366,6 +302,14 @@ const monthlyTrendData = getMonthlyData();
           </div>
         </GlassCard>
       </motion.div>
+
+      <GlassCard>
+  <h2 className="text-2xl font-bold text-white mb-6">
+    Spending Radar 🕸️
+  </h2>
+  <RadarSpending data={topCategories} />
+</GlassCard>
+
 
 
 
