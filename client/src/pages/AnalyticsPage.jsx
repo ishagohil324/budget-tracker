@@ -284,20 +284,38 @@ const monthlyTrendData = getMonthlyData();
                   }}
                 />
                 <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="income"
-                  stroke="#10B981"
-                  strokeWidth={3}
-                  name="Income"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="expense"
-                  stroke="#EF4444"
-                  strokeWidth={3}
-                  name="Expense"
-                />
+                <defs>
+  <linearGradient id="incomeGlow" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stopColor="#00F5A0" />
+    <stop offset="100%" stopColor="#00D9F5" />
+  </linearGradient>
+
+  <linearGradient id="expenseGlow" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stopColor="#FF4D4D" />
+    <stop offset="100%" stopColor="#FF00C8" />
+  </linearGradient>
+</defs>
+
+<Line
+  type="monotone"
+  dataKey="income"
+  stroke="url(#incomeGlow)"
+  strokeWidth={4}
+  dot={{ r: 6, strokeWidth: 2 }}
+  activeDot={{ r: 9 }}
+  name="Income"
+/>
+
+<Line
+  type="monotone"
+  dataKey="expense"
+  stroke="url(#expenseGlow)"
+  strokeWidth={4}
+  dot={{ r: 6, strokeWidth: 2 }}
+  activeDot={{ r: 9 }}
+  name="Expense"
+/>
+
               </LineChart>
             </ResponsiveContainer>
           )}
