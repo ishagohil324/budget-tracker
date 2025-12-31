@@ -4,47 +4,67 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
+  Tooltip,
   ResponsiveContainer,
 } from 'recharts';
 
-const RadarSpending = ({ data }) => (
-  <ResponsiveContainer width="100%" height={350}>
-    <RadarChart
-      data={data}
-      outerRadius="80%"
-    >
-      <PolarGrid stroke="rgba(255,255,255,0.25)" />
+const RadarSpending = ({ data }) => {
+  if (!data || data.length === 0) return null;
 
-      <PolarAngleAxis
-        dataKey="name"
-        stroke="#fff"
-        tick={{ fill: '#e5e7eb', fontSize: 12 }}
-      />
+  return (
+    <ResponsiveContainer width="100%" height={360}>
+      <RadarChart data={data}>
+        {/* Grid */}
+        <PolarGrid
+          stroke="rgba(255,255,255,0.15)"
+          radialLines
+        />
 
-      {/* 🔥 THIS IS THE MISSING PIECE */}
-      <PolarRadiusAxis
-        stroke="rgba(255,255,255,0.3)"
-        tick={{ fill: '#9ca3af', fontSize: 10 }}
-        angle={90}
-      />
+        {/* Category labels */}
+        <PolarAngleAxis
+          dataKey="name"
+          tick={{ fill: '#e5e7eb', fontSize: 13, fontWeight: 600 }}
+        />
 
-      <Radar
-        name="Spending"
-        dataKey="value"
-        stroke="#8B5CF6"
-        fill="url(#radarGradient)"
-        fillOpacity={0.7}
-      />
+        {/* Value scale */}
+        <PolarRadiusAxis
+          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          axisLine={false}
+        />
 
-      {/* Sexy gradient */}
-      <defs>
-        <linearGradient id="radarGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#a78bfa" />
-          <stop offset="100%" stopColor="#6366f1" />
-        </linearGradient>
-      </defs>
-    </RadarChart>
-  </ResponsiveContainer>
-);
+        {/* Tooltip */}
+        <Tooltip
+          formatter={(value) => `₹ ${value.toLocaleString()}`}
+          contentStyle={{
+            backgroundColor: '#0f172a',
+            borderRadius: '12px',
+            border: '1px solid rgba(255,255,255,0.15)',
+            color: '#fff',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+          }}
+        />
+
+        {/* Gradient */}
+        <defs>
+          <linearGradient id="radarGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="50%" stopColor="#8b5cf6" />
+            <stop offset="100%" stopColor="#ec4899" />
+          </linearGradient>
+        </defs>
+
+        {/* Radar */}
+        <Radar
+          dataKey="value"
+          stroke="url(#radarGradient)"
+          strokeWidth={3}
+          fill="url(#radarGradient)"
+          fillOpacity={0.45}
+          dot={{ r: 4, fill: '#fff' }}
+        />
+      </RadarChart>
+    </ResponsiveContainer>
+  );
+};
 
 export default RadarSpending;
