@@ -26,38 +26,41 @@ const AnalyticsPage = () => {
   const topCategories = categoryData.slice(0, 5);
 
   // Monthly trend data
-  const getMonthlyData = () => {
-    const monthlyData = {};
-    const last6Months = [];
 
-    for (let i = 5; i >= 0; i--) {
-      const date = new Date();
-      date.setMonth(date.getMonth() - i);
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      last6Months.push(monthKey);
-      monthlyData[monthKey] = {
-        month: date.toLocaleString('default', { month: 'short' }),
-        income: 0,
-        expense: 0,
-      };
-    }
+const getMonthlyData = () => {
+  const monthlyData = [];
+  const now = new Date();
 
-    transactions.forEach((t) => {
-      const date = new Date(t.date);
-      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      if (monthlyData[monthKey]) {
-        if (t.type === 'income') {
-          monthlyData[monthKey].income += t.amount;
-        } else {
-          monthlyData[monthKey].expense += t.amount;
-        }
-      }
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+
+    monthlyData.push({
+      key: `${d.getFullYear()}-${d.getMonth()}`, // UNIQUE
+      month: d.toLocaleString('default', {
+        month: 'short',
+        year: '2-digit', // 👈 THIS FIXES DUPLICATES
+      }),
+      income: 0,
+      expense: 0,
     });
+  }
 
-    return last6Months.map((key) => monthlyData[key]);
-  };
+  transactions.forEach((t) => {
+    const td = new Date(t.date);
+    const key = `${td.getFullYear()}-${td.getMonth()}`;
 
-  const monthlyTrendData = getMonthlyData();
+    const entry = monthlyData.find((m) => m.key === key);
+    if (!entry) return;
+
+    if (t.type === 'income') entry.income += t.amount;
+    else entry.expense += t.amount;
+  });
+
+  return monthlyData;
+};
+
+
+const monthlyTrendData = getMonthlyData();
 
   // Spending insights
   const getWeeklyAverage = () => {
@@ -147,49 +150,63 @@ const AnalyticsPage = () => {
       {/* Charts Row 1 - Pie & Bar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pie Chart */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <GlassCard>
-            <h2 className="text-2xl font-bold text-white mb-6">
-              Expense by Category
-            </h2>
-            {categoryData.length === 0 ? (
-              <p className="text-gray-300 text-center py-12">No expense data yet</p>
-            ) : (
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={categoryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name} ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {categoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value) => formatCurrency(value)}
-                    contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: 'none',
-                      borderRadius: '8px',
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+{/* Pie Chart */}
+<motion.div
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ delay: 0.4 }}
+>
+  <GlassCard>
+    <h2 className="text-2xl font-bold text-white mb-6">
+      Expense by Category
+    </h2>
+    {categoryData.length === 0 ? (
+      <p className="text-gray-300 text-center py-12">No expense data yet</p>
+    ) : (
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={categoryData}
+            cx="50%"
+            cy="50%"
+            labelLine={true}
+            label={({ name, percent }) =>
+              `${name} ${(percent * 100).toFixed(0)}%`
+            }
+            outerRadius={100}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {categoryData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+            ))}
+          </Pie>
+<Tooltip
+  formatter={(value, name) => [
+    <span style={{ color: '#000', fontWeight: 600 }}>
+      {formatCurrency(value)}
+    </span>,
+    <span style={{ color: '#000' }}>{name}</span>,
+  ]}
+  contentStyle={{
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    border: 'none',
+    borderRadius: '10px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+  }}
+  labelStyle={{ color: '#000', fontWeight: 'bold' }}
+/>
+
+          <Legend 
+            formatter={(value, entry) => (
+              <span style={{ color: '#fff' }}>{value}</span>
             )}
-          </GlassCard>
-        </motion.div>
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    )}
+  </GlassCard>
+</motion.div>
 
         {/* Bar Chart */}
         <motion.div
@@ -211,13 +228,20 @@ const AnalyticsPage = () => {
                   <XAxis dataKey="name" stroke="#fff" />
                   <YAxis stroke="#fff" />
                   <Tooltip
-                    formatter={(value) => formatCurrency(value)}
-                    contentStyle={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
-                      border: 'none',
-                      borderRadius: '8px',
-                    }}
-                  />
+  formatter={(value) => (
+    <span style={{ color: '#fff', fontWeight: 600 }}>
+      {formatCurrency(value)}
+    </span>
+  )}
+  contentStyle={{
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    border: 'none',
+    borderRadius: '10px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+  }}
+  labelStyle={{ color: '#fff', fontWeight: 'bold' }}
+/>
+
                   <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                     {topCategories.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -324,6 +348,12 @@ const AnalyticsPage = () => {
           </div>
         </GlassCard>
       </motion.div>
+
+
+
+
+      
+
     </div>
   );
 };
