@@ -312,10 +312,12 @@ const monthlyTrendData = getMonthlyData();
   <RadarSpending data={topCategories} />
 </GlassCard>
 
-
-
-
-
+      <GlassCard>
+  <h2 className="text-2xl font-bold text-white mb-6">
+    Spending Heatmap 🔥
+  </h2>
+  <SpendingHeatmap data={heatmapData} />
+</GlassCard>
       
 
     </div>
