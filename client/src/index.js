@@ -150,5 +150,5 @@ root.render(
 
 // git status
 // git add .
-// git push -u origin main"
-// git push
+// git commit -m "Initial commit"
+// git push 
