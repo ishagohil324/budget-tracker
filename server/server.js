@@ -109,6 +109,10 @@ app.use('/api/goals', goalRoutes);
 app.get('/', (req, res) => {
   res.send('Budget Tracker API is running 🚀');
 });
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 
 
 // Port
