@@ -102,9 +102,14 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/goals', goalRoutes);
 
 // Test route
+// app.get('/', (req, res) => {
+//   res.json({ message: 'Budget Tracker API is running! 🚀' });
+// });
+
 app.get('/', (req, res) => {
-  res.json({ message: 'Budget Tracker API is running! 🚀' });
+  res.send('Budget Tracker API is running 🚀');
 });
+
 
 // Port
 const PORT = process.env.PORT || 5000;
