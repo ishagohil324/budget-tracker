@@ -35,6 +35,7 @@ root.render(
 // │   │   │   ├── BalanceCard3D.jsx
 // │   │   │   ├── RecentTransactions.jsx
 // │   │   │   └── QuickActions.jsx
+//              |__AIInsights.jsx 
 // │   │   │
 // │   │   ├── transactions/
 // │   │   │   ├── TransactionList.jsx
@@ -54,6 +55,7 @@ root.render(
 // │   │   │   ├── LineChart3D.jsx
 // │   │   │   ├── BarChart3D.jsx
 // │   │   │   └── SpendingTrends.jsx
+// │   │   │    ├── RadarSpending.jsx
 // │   │   │
 // │   │   ├── categories/
 // │   │   │   ├── CategoryList.jsx
@@ -74,7 +76,8 @@ root.render(
 // │   │   ├── BudgetsPage.jsx
 // │   │   ├── AnalyticsPage.jsx
 // │   │   ├── CategoriesPage.jsx
-// │   │   └── ProfilePage.jsx
+// │   │   ├── ProfilePage.jsx
+// │   │   └── GoalsPage.jsx
 // │   │
 // │   ├── context/
 // │   │   ├── AuthContext.jsx
@@ -86,7 +89,9 @@ root.render(
 // │   │   ├── api.js
 // │   │   ├── axios.js
 // │   │   ├── formatters.js
-// │   │   └── constants.js
+// │   │   ├── constants.js
+// │   │   ├── exportUtils.js
+// │   │   ├── aiPredictions.js
 // │   │
 // │   ├── hooks/
 // │   │   ├── useAuth.js
@@ -119,16 +124,19 @@ root.render(
 // │   ├── transactionController.js ✅ (CRUD + Stats)
 // │   ├── budgetController.js ✅ (CRUD + Alerts)
 // │   └── categoryController.js ✅ (CRUD + By Type)
+//      |--goalController.js ✅ (CRUD + Progress)
 // ├── models/
 // │   ├── User.js ✅ (User schema)
 // │   ├── Transaction.js ✅ (Transaction schema)
 // │   ├── Budget.js ✅ (Budget schema)
 // │   └── Category.js ✅ (Category schema)
+//      |--Goal.js ✅ (Goal schema)
 // ├── routes/
 // │   ├── auth.js ✅ (Auth routes)
 // │   ├── transactions.js ✅ (Transaction routes)
 // │   ├── budgets.js ✅ (Budget routes)
 // │   └── categories.js ✅ (Category routes)
+//      |--goals.js ✅ (Goal routes)
 // ├── middleware/
 // │   └── auth.js ✅ (JWT authentication)
 // ├── .env ✅ (Environment variables)
@@ -139,7 +147,8 @@ root.render(
 
 
 
+
 // git status
 // git add .
-// git commit -m "Daily update"
+// git push -u origin main"
 // git push
