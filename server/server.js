@@ -81,11 +81,22 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: process.env.CLIENT_URL || '*',
-  credentials: true
-}));
-app.use(express.json());
+// app.use(cors({
+//   origin: process.env.CLIENT_URL || '*',
+//   credentials: true
+// }));
+// app.use(express.json());
+
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://budget-tracker-m901.onrender.com'
+    ],
+    credentials: true,
+  })
+);
+
 
 // Import Routes
 const authRoutes = require('./routes/auth');
