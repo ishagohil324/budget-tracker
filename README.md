@@ -66,12 +66,12 @@ JWT_SECRET=your_super_secret_jwt_key
 
 Run the App
 * for backend
-  cd server
-npm run dev
+  -cd server
+  -npm run dev
 
 * for frontend
-  cd ../client
-npm start
+ - cd ../client
+ - npm start
 
 
 
