@@ -50,12 +50,14 @@ Setup Instructions (Run Locally)
 
 1) git clone https://github.com/your-username/budget-tracker.git
 cd budget-tracker
+
 2)(backend)cd server
 npm install
+
 3)(frontend)cd ../client
 npm install
-4)Create .env File (Backend)
 
+4)Create .env File (Backend)
 Inside the server/ folder, create a .env file:
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/budget_tracker
