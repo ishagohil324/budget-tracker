@@ -1,4 +1,3 @@
-// import api from './axios';
 import axios from './axios';
 
 // Auth APIs
@@ -39,7 +38,15 @@ export const categoryAPI = {
   update: (id, data) => axios.put(`/api/categories/${id}`, data),
   delete: (id) => axios.delete(`/api/categories/${id}`),
 };
-// import api from './axios';
+
+// Goal APIs ✅ ADDED
+export const goalAPI = {
+  getAll: () => axios.get('/api/goals'),
+  getById: (id) => axios.get(`/api/goals/${id}`),
+  create: (data) => axios.post('/api/goals', data),
+  update: (id, data) => axios.put(`/api/goals/${id}`, data),
+  delete: (id) => axios.delete(`/api/goals/${id}`),
+};// import api from './axios';
 
 // // Auth APIs
 // export const authAPI = {
