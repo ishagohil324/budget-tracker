@@ -60,6 +60,7 @@ const Register = () => {
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">Create Account 🚀</h1>
             <p className="text-gray-300">Start tracking your budget today</p>
+            <h6 className="text-gray-300">first request may take time</h6>
           </div>
 
           {error && <Alert type="error" message={error} onClose={() => setError('')} />}
