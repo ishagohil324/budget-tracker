@@ -3,43 +3,42 @@ import axios from './axios';
 
 // Auth APIs
 export const authAPI = {
-  register: (data) => axios.post('/auth/register', data),
-  login: (data) => axios.post('/auth/login', data),
-  getCurrentUser: () => axios.get('/auth/me'),
+  register: (data) => axios.post('/api/auth/register', data),
+  login: (data) => axios.post('/api/auth/login', data),
+  getCurrentUser: () => axios.get('/api/auth/me'),
 };
 
 // Transaction APIs
 export const transactionAPI = {
-  getAll: () => axios.get('/transactions'),
-  getById: (id) => axios.get(`/transactions/${id}`),
-  create: (data) => axios.post('/transactions', data),
-  update: (id, data) => axios.put(`/transactions/${id}`, data),
-  delete: (id) => axios.delete(`/transactions/${id}`),
-  getStats: () => axios.get('/transactions/stats'),
+  getAll: () => axios.get('/api/transactions'),
+  getById: (id) => axios.get(`/api/transactions/${id}`),
+  create: (data) => axios.post('/api/transactions', data),
+  update: (id, data) => axios.put(`/api/transactions/${id}`, data),
+  delete: (id) => axios.delete(`/api/transactions/${id}`),
+  getStats: () => axios.get('/api/transactions/stats'),
   getByDateRange: (startDate, endDate) => 
-    axios.get(`/transactions/daterange?startDate=${startDate}&endDate=${endDate}`),
+    axios.get(`/api/transactions/daterange?startDate=${startDate}&endDate=${endDate}`),
 };
 
 // Budget APIs
 export const budgetAPI = {
-  getAll: () => axios.get('/budgets'),
-  getById: (id) => axios.get(`/budgets/${id}`),
-  create: (data) => axios.post('/budgets', data),
-  update: (id, data) => axios.put(`/budgets/${id}`, data),
-  delete: (id) => axios.delete(`/budgets/${id}`),
-  getAlerts: () => axios.get('/budgets/alerts'),
+  getAll: () => axios.get('/api/budgets'),
+  getById: (id) => axios.get(`/api/budgets/${id}`),
+  create: (data) => axios.post('/api/budgets', data),
+  update: (id, data) => axios.put(`/api/budgets/${id}`, data),
+  delete: (id) => axios.delete(`/api/budgets/${id}`),
+  getAlerts: () => axios.get('/api/budgets/alerts'),
 };
 
 // Category APIs
 export const categoryAPI = {
-  getAll: () => axios.get('/categories'),
-  getById: (id) => axios.get(`/categories/${id}`),
-  getByType: (type) => axios.get(`/categories/type/${type}`),
-  create: (data) => axios.post('/categories', data),
-  update: (id, data) => axios.put(`/categories/${id}`, data),
-  delete: (id) => axios.delete(`/categories/${id}`),
+  getAll: () => axios.get('/api/categories'),
+  getById: (id) => axios.get(`/api/categories/${id}`),
+  getByType: (type) => axios.get(`/api/categories/type/${type}`),
+  create: (data) => axios.post('/api/categories', data),
+  update: (id, data) => axios.put(`/api/categories/${id}`, data),
+  delete: (id) => axios.delete(`/api/categories/${id}`),
 };
-
 // import api from './axios';
 
 // // Auth APIs
