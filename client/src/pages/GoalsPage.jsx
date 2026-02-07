@@ -94,7 +94,7 @@ const GoalsPage = () => {
         await axios.put(`/goals/${editingGoal._id}`, formData);
         setAlert({ type: 'success', message: 'Goal updated successfully!' });
       } else {
-        await axios.post('/goals', formData);
+        await axios.post('/api/goals', formData);
         setAlert({ type: 'success', message: 'Goal created successfully!' });
       }
       fetchGoals();
@@ -123,7 +123,7 @@ const GoalsPage = () => {
     }
 
     try {
-      await axios.post(`/goals/${addMoneyModal._id}/add`, { amount: parseFloat(addAmount) });
+      await axios.post(`/api/goals/${addMoneyModal._id}/add`, { amount: parseFloat(addAmount) });
       setAlert({ type: 'success', message: 'Money added to goal!' });
       fetchGoals();
       setAddMoneyModal(null);
