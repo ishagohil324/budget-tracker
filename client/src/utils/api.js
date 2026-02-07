@@ -39,14 +39,19 @@ export const categoryAPI = {
   delete: (id) => axios.delete(`/api/categories/${id}`),
 };
 
-// Goal APIs ✅ ADDED
+// Goal APIs
 export const goalAPI = {
   getAll: () => axios.get('/api/goals'),
   getById: (id) => axios.get(`/api/goals/${id}`),
   create: (data) => axios.post('/api/goals', data),
   update: (id, data) => axios.put(`/api/goals/${id}`, data),
   delete: (id) => axios.delete(`/api/goals/${id}`),
-};// import api from './axios';
+};
+
+
+
+
+// import api from './axios';
 
 // // Auth APIs
 // export const authAPI = {

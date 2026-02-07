@@ -51,7 +51,7 @@ const GoalsPage = () => {
   const fetchGoals = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/goals');
+      const response = await axios.get('/api/goals');
       setGoals(response.data);
     } catch (error) {
       setAlert({ type: 'error', message: 'Failed to fetch goals' });
