@@ -57,7 +57,7 @@ export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 // API endpoints
-export const API_BASE_URL = 'http://localhost:5000/api';
+export const API_BASE_URL = 'https://budget-tracker-m9o1.onrender.com/api';
 
 // Local storage keys
 export const STORAGE_KEYS = {
