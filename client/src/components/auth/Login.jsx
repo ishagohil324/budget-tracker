@@ -99,7 +99,7 @@ const Login = () => {
 
             {/* Register Link */}
             <p className="text-center text-gray-300">
-              First request can may take a few minutes <br />
+             few minutes <br />
               patience is appreciated! <br />
               Don't have an account?{' '}
               <Link to="/register" className="text-blue-400 hover:text-blue-300 font-semibold">
