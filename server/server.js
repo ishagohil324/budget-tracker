@@ -290,7 +290,7 @@ const allowedOrigins = [
   "https://budget-tracker-ten-iota.vercel.app"
 ];
 
-// ✅ CORS Setup (fixes preflight + deployment issues)
+// ✅ CORS Setup - Apply globally BEFORE routes
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -309,8 +309,8 @@ app.use(
   })
 );
 
-// ✅ Preflight support
-app.options("*", cors());
+// ❌ REMOVE THIS LINE - it's causing the error
+// app.options("*", cors());
 
 // Import Routes
 const authRoutes = require("./routes/auth");
