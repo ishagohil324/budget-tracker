@@ -16,7 +16,7 @@ const themes = {
   pinkberry: {
     name: 'pink berry ',
     gradient: 'linear-gradient(135deg, #1f071fff 0%, #180e19ff 50%, #4a0634ff 100%)',
-    primary: '#10b981',
+    primary: '#b91070',
   },
 };
 
