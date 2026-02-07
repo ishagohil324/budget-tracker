@@ -46,7 +46,7 @@ const Login = () => {
         <GlassCard hover={false}>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-2">Welcome Back! 👋</h1>
-            <p className="text-gray-300">Login to manage your budget</p>
+            <p className="text-gray-300">first request may take time </p>
           </div>
 
           {error && <Alert type="error" message={error} onClose={() => setError('')} />}
