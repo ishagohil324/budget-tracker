@@ -114,7 +114,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://budget-tracker-m9o1.onrender.com/api', // ✅ Added /api
+  baseURL: process.env.REACT_APP_API_URL || 'https://budget-tracker-m9o1.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
